@@ -3,45 +3,208 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/content_background"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_pre_rehab"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
-        android:elevation="20dp"
-        android:theme="@style/AppTheme.TransparentTheme"
+    <include
+        android:id="@+id/toolbar_main"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </androidx.appcompat.widget.Toolbar>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        layout="@layout/toolbar"
+        />
 
     <ScrollView
-
-        android:id="@+id/scrollView2"
+        android:id="@+id/scrollViewMainPage"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_pre_rehab">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_main"
+        app:layout_constraintVertical_bias="1.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_pre_rehab">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Teilen macht"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/main_text_happy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="glücklich."
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            <TextView
+                android:id="@+id/text_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="30dp"
+                android:text="Hier kannst Du deine Sachen einfach mit Bekannten teilen. Und behältst dabei den Überblick"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/main_text_happy" />
+
+            <Button
+                android:id="@+id/toolbar_register_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/sharing_purple"
+                android:text="Kostenlos Registrieren"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_1" />
+
+            <TextView
+                android:id="@+id/sub_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Kein Spam. Alle deine Daten sind jederzeit löschbar."
+                android:textColor="@color/grey"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_register_button" />
+
+            <TextView
+                android:id="@+id/lend_and_lend_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="15dp"
+                android:text="Das leihen &amp; verleihen Andere"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sub_button"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/example_item_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:requiresFadingEdge="vertical"
+                android:fadingEdge="horizontal"
+                android:fadingEdgeLength="45dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lend_and_lend_text"
+                />
+
+            <TextView
+                android:id="@+id/and_more_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:layout_marginTop="15dp"
+                android:text="und noch viel, viel mehr"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/example_item_list"/>
+
+            <TextView
+                android:id="@+id/circles_make_lend_easier_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="15dp"
+                android:text="Kreise machen Verleihen einfach, für ALLE."
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/and_more_text"/>
+
+            <TextView
+                android:id="@+id/screen_text1_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/text_1_1"
+                android:textColor="@color/black"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/image_text1"
+                app:layout_constraintTop_toBottomOf="@+id/circles_make_lend_easier_text"
+                />
+            <TextView
+                android:id="@+id/screen_text1_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textSize="16sp"
+                android:layout_marginStart="10dp"
+                android:text="@string/text_1_2"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/image_text1"
+                app:layout_constraintTop_toBottomOf="@+id/screen_text1_1"
+                />
+            <TextView
+                android:id="@+id/screen_text1_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/text_1_3"
+                android:layout_marginTop="5dp"
+                android:textSize="16sp"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/image_text1"
+                app:layout_constraintTop_toBottomOf="@+id/screen_text1_2"
+                />
+            <ImageView
+                android:id="@+id/image_text1"
+                android:layout_width="150dp"
+                android:layout_height="0dp"
+                android:src="@drawable/ic_undraw_connection_re_lcud"
+                app:layout_constraintTop_toTopOf="@+id/screen_text1_1"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/screen_text1_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_pre_rehab">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sharing hilft Dinge zu teilen."
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteY="56dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

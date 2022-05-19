@@ -1,12 +1,10 @@
 <resources>
     <string name="app_name">Sharing</string>
     <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="header_1">Kreise machen Verleihen einfach für ALLE.</string>
+    <string name="text_1_1">Kreise sind unsere <b>Gruppen</b>, mit einem wichtigen Unterschied zu vielen anderen Plattformen. Jeder sollte nur in Kreisen aus Personen sein, die sich regelmäßig treffen.</string>
+    <string name="text_1_2">Ideale Kreise sind etwa eine Abteilung in einer Firma, ein Sportverein oder ein Wohngebäude. Weniger gut geeignet sind Gruppen aus Freunden oder Verwandten, die sich nur selten persönlich treffen.</string>
+    <string name="text_1_3">Du hast eine Idee für einen guten Kreis? Dann leg los und starte deinen Kreis.</string>
 </resources>
