@@ -1,0 +1,51 @@
+query alsome($personId: ID!){
+    node(id: $personId){
+        id
+
+        ... on Person {
+            id
+            firstName
+            lastName
+
+            conversations(first: 1) {
+                edges {
+                    node {
+                        id
+                        ...on Conversation{
+                            id
+                            participants{
+                                firstName
+                                lastName
+                            }
+                            messages(first: 10) {
+                                edges {
+                                    node {
+                                        id
+                                        ... on Message{
+                                            id
+                                            timestamp
+                                            message
+                                            sender {
+                                                firstName
+                                                lastName
+                                                id
+                                            }
+                                            recipient {
+                                                firstName
+                                                lastName
+                                                id
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
+        }
+
+    }
+}

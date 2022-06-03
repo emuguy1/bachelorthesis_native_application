@@ -1,0 +1,128 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: RootQueryType
+    mutation: RootMutationType
+}
+
+interface Node {
+    "The ID of the object."
+    id: ID!
+}
+
+type Conversation implements Node {
+    "The ID of an object"
+    id: ID!
+    lastMessage: String
+    lastMessageAt: DateTime
+    messages(after: String, before: String, first: Int, last: Int): MessageConnection
+    participants: [Person]
+    readAt: DateTime
+}
+
+type ConversationConnection {
+    edges: [ConversationEdge]
+    pageInfo: PageInfo!
+}
+
+type ConversationEdge {
+    cursor: String
+    node: Conversation
+}
+
+type Item implements Node {
+    category: CategoryEnum
+    creator: Person
+    description: String
+    "The ID of an object"
+    id: ID!
+    name: String
+}
+
+type ItemConnection {
+    edges: [ItemEdge]
+    pageInfo: PageInfo!
+}
+
+type ItemEdge {
+    cursor: String
+    node: Item
+}
+
+type Message implements Node {
+    "The ID of an object"
+    id: ID!
+    message: String
+    recipient: Person
+    sender: Person
+    timestamp: DateTime
+}
+
+type MessageConnection {
+    edges: [MessageEdge]
+    pageInfo: PageInfo!
+}
+
+type MessageEdge {
+    cursor: String
+    node: Message
+}
+
+type PageInfo {
+    "When paginating forwards, the cursor to continue."
+    endCursor: String
+    "When paginating forwards, are there more items?"
+    hasNextPage: Boolean!
+    "When paginating backwards, are there more items?"
+    hasPreviousPage: Boolean!
+    "When paginating backwards, the cursor to continue."
+    startCursor: String
+}
+
+type Person implements Node {
+    accessibleItems(after: String, before: String, first: Int, last: Int): ItemConnection
+    conversations(after: String, before: String, first: Int, last: Int): ConversationConnection
+    firstName: String
+    "The ID of an object"
+    id: ID!
+    items(after: String, before: String, first: Int, last: Int): ItemConnection
+    lastName: String
+}
+
+type RootMutationType {
+    login(email: String!, password: String!): String
+    postMessage(message: String!, recipientId: ID!): ID
+}
+
+type RootQueryType {
+    "get own user-data"
+    me: Person
+    "get a single node"
+    node(
+        "The ID of an object."
+        id: ID!
+    ): Node
+}
+
+enum CategoryEnum {
+    BOOKS
+    EVENT
+    FITNESS
+    GAMES
+    HOBBY
+    KITCHEN
+    NONE
+    OUTDOOR
+    TECH
+    TOOLS
+    TRANSPORT
+}
+
+"""
+
+The `DateTime` scalar type represents a date and time in the UTC
+timezone. The DateTime appears in a JSON response as an ISO8601 formatted
+string, including UTC timezone ("Z"). The parsed date and time string will
+be converted to UTC if there is an offset.
+"""
+scalar DateTime

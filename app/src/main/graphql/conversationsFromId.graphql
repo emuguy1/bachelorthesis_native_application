@@ -1,0 +1,22 @@
+query convo($id: ID!){
+    node(id: $id){
+        ...on Conversation{
+            id
+            messages(first: 10) {
+                edges {
+                    node {
+                        id
+                        ...on Message{
+                            id
+                            message
+                            timestamp
+                            sender {
+                                id
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

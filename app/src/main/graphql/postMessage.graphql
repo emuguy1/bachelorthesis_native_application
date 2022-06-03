@@ -1,0 +1,3 @@
+mutation post_message($recipientId: ID!, $message: String!) {
+    postMessage(recipientId: $recipientId, message: $message)
+}

@@ -1,0 +1,9 @@
+query node_person($id: ID!) {
+    node(id: $id) {
+        id
+        ... on Person {
+            firstName
+            lastName
+        }
+    }
+}

@@ -6,17 +6,30 @@ import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo3.exception.ApolloException
+import com.apollographql.apollo3.network.okHttpClient
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import de.num42.sharing.SharingApplication
+import de.num42.sharing.apollo.ApolloInstance
+import de.num42.sharing.apolloInstance
 import de.num42.sharing.databinding.ActivityMainBinding
+import de.num42.sharing.graphql.MeQuery
 import de.num42.sharing.ui.login.LoginActivity
 import de.num42.sharing.ui.register.RegisterActivity
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var client : ApolloClient
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +37,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-       setSupportActionBar(binding.toolbarMain.toolbar)
+        setSupportActionBar(binding.toolbarMain.toolbar)
+
+        client = apolloInstance.get()
+
+        println("Test--------"+apolloInstance.BASE_URL)
 
         val textView = binding.mainTextHappy
         val paint = textView.paint
@@ -78,8 +95,26 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        getPersonData()
 
+    }
 
+    private fun getPersonData(){
+        lifecycleScope.launchWhenResumed {
+            val response = try {
+                client.query(MeQuery()).execute()
+            }catch (e : ApolloException){
+                //Do something with error
+                return@launchWhenResumed
+            }
+            val me = response.data?.me
+            if(me == null || response.hasErrors()){
+                println(response.errors?.get(0)?.message)
+                return@launchWhenResumed
+            } else {
+                println("Test--------"+me)
+            }
+        }
     }
 
 }

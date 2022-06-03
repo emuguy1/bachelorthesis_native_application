@@ -1,0 +1,22 @@
+{
+  "name": "Sharing GraphQL Schema",
+  "schemaPath": "schema.graphqls",
+  "extensions": {
+    "endpoints": {
+      "Default GraphQL Endpoint": {
+        "url": "http://192.168.188.69:4000/graphql/graphiql/",
+        "headers": {
+          "user-agent": "JS GraphQL"
+        },
+        "introspect": true
+      },
+      "Authenticated GraphQL Endpoint": {
+        "url": "http://192.168.188.69:4000/graphql/graphiql?authorization=f6310f39449c363ce7160e629f4b0065aaa5bb44c0b9ef71642078fd0408ac90&",
+        "headers": {
+          "user-agent": "JS GraphQL"
+        },
+        "introspect": true
+      }
+    }
+  }
+}

@@ -116,6 +116,35 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/login_button" />
 
+        <TextView
+            android:id="@+id/login_error_text"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/forgot_password"
+            android:gravity="center"
+            android:textColor="@color/sharing_red"
+            android:textSize="19sp"
+            android:text=" Login fehlgeschlagen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <ProgressBar
+            android:visibility="gone"
+            android:id="@+id/loading_spinner"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            style="?android:attr/progressBarStyle"
+            android:progressTint="@color/color82"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="174dp"
+            tools:layout_editor_absoluteY="78dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

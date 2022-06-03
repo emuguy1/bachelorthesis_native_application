@@ -1,0 +1,15 @@
+query message($id: ID!){
+    node(id: $id){
+        ... on Message{
+            id
+            message
+            timestamp
+            sender {
+                id
+            }
+            recipient{
+                id
+            }
+        }
+    }
+}
