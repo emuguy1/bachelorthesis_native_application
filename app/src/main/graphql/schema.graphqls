@@ -31,7 +31,7 @@ type ConversationEdge {
 }
 
 type Item implements Node {
-    category: CategoryEnum
+    category: ItemCategoryEnum
     creator: Person
     description: String
     "The ID of an object"
@@ -53,6 +53,7 @@ type Message implements Node {
     "The ID of an object"
     id: ID!
     message: String
+    readAt: DateTime
     recipient: Person
     sender: Person
     timestamp: DateTime
@@ -90,6 +91,8 @@ type Person implements Node {
 }
 
 type RootMutationType {
+    createItem(category: ItemCategoryEnum!, description: String!, name: String!): ID
+    deleteItem(id: ID!): Boolean
     login(email: String!, password: String!): String
     postMessage(message: String!, recipientId: ID!): ID
 }
@@ -104,7 +107,7 @@ type RootQueryType {
     ): Node
 }
 
-enum CategoryEnum {
+enum ItemCategoryEnum {
     BOOKS
     EVENT
     FITNESS

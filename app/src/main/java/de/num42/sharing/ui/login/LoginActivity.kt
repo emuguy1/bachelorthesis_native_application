@@ -1,41 +1,37 @@
 package de.num42.sharing.ui.login
 
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.LinearGradient
-import android.graphics.Shader
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.exception.ApolloException
-import com.google.android.flexbox.FlexDirection
-import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.flexbox.JustifyContent
-import de.num42.sharing.apollo.ApolloInstance
 import de.num42.sharing.apolloInstance
 import de.num42.sharing.databinding.ActivityLoginBinding
-import de.num42.sharing.databinding.ActivityMainBinding
 import de.num42.sharing.graphql.LoginMutation
-import de.num42.sharing.graphql.MeQuery
-import de.num42.sharing.ui.main.ExampleListAdapter
 import de.num42.sharing.ui.main.MainActivity
+import de.num42.sharing.ui.profile.ProfileActivity
 import de.num42.sharing.ui.register.RegisterActivity
+
 
 class LoginActivity: AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var client : ApolloClient
     private lateinit var loginIntent :Intent
+    private lateinit var sharedPreferences: SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedPreferences = getSharedPreferences("SharingSharedPref", MODE_PRIVATE)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         client = apolloInstance.get()
 
-        loginIntent= Intent(this, RegisterActivity::class.java)
+        loginIntent= Intent(this, ProfileActivity::class.java)
 
         setSupportActionBar(binding.toolbarLogin.toolbar)
 
@@ -58,18 +54,26 @@ class LoginActivity: AppCompatActivity() {
         binding.loadingSpinner.visibility= View.VISIBLE
         lifecycleScope.launchWhenResumed {
             val response = try {
-                client.mutation(LoginMutation("asol@num42.de","password")).execute()
+                val email = binding.EmailInput.text.toString()
+                val password = binding.inputPassword.text.toString()
+                client.mutation(LoginMutation(email,password)).execute()
             }catch (e : ApolloException){
-                //Do something with error
+                binding.loadingSpinner.visibility= View.INVISIBLE
+                binding.loginErrorText.visibility= View.VISIBLE
+                binding.loginErrorText.text = "Es konnte keine Verbindung hergestellt werden. Versuchen sie es später noch einmal."
                 return@launchWhenResumed
             }
             val authentication = response.data?.login
             if(authentication == null || response.hasErrors()){
                 println(response.errors?.get(0)?.message)
                 binding.loginErrorText.visibility = View.VISIBLE
+                binding.loginErrorText.text = response.errors?.get(0)?.message
                 binding.loadingSpinner.visibility= View.GONE
                 return@launchWhenResumed
             } else {
+                sharedPreferences.edit()
+                    .putString("authentication",authentication)
+                    .apply()
                 client=apolloInstance.setAuthorization(authentication)
                 startActivity(loginIntent)
                 println(authentication)

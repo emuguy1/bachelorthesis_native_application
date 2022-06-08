@@ -27,7 +27,7 @@
         android:id="@+id/login_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Profil"
+        android:text="Nachrichten"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -35,53 +35,13 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar_logged_in"
         app:layout_constraintStart_toStartOf="parent" />
 
-
-    <TextView
-        android:id="@+id/email_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="15dp"
-        android:text="E-Mail:"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_text" />
-
-    <TextView
-        android:id="@+id/first_name_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="15dp"
-        android:text="first_name"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_text"/>
-
-    <TextView
-        android:id="@+id/last_name_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="15dp"
-        android:text="E-Mail:"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/first_name_text" />
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/item_list"
+        android:id="@+id/converstions_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/last_name_text"
+        app:layout_constraintTop_toBottomOf="@id/login_text"
         app:layout_constraintBottom_toBottomOf="parent"
         />
 

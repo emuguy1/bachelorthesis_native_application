@@ -1,14 +1,14 @@
-package de.num42.sharing.ui.profile
-
+package de.num42.sharing.ui.messages
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import de.num42.sharing.databinding.ActivityProfileBinding
 import de.num42.sharing.ui.main.MainActivity
 import de.num42.sharing.ui.message.MessageActivity
-import de.num42.sharing.ui.register.RegisterActivity
+import de.num42.sharing.ui.profile.ProfileActivity
 
-class ProfileActivity: AppCompatActivity() {
+
+class MessagesActivity: AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +25,7 @@ class ProfileActivity: AppCompatActivity() {
         }
 
         binding.toolbarLoggedIn.toolbarMessagesButton.setOnClickListener{
-            val intent = Intent(this, MessageActivity::class.java)
+            val intent = Intent(this, MessagesActivity::class.java)
             startActivity(intent)
         }
 

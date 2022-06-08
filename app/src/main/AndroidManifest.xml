@@ -36,6 +36,33 @@
         </activity>
 
         <activity
+            android:exported="true"
+            android:name=".ui.profile.ProfileActivity"
+            android:launchMode="singleTop"
+            android:noHistory="true"
+            android:theme="@style/AppCompatTheme"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:exported="true"
+            android:name=".ui.message.MessageActivity"
+            android:launchMode="singleTop"
+            android:noHistory="true"
+            android:theme="@style/AppCompatTheme"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:exported="true"
+            android:name=".ui.messages.MessagesActivity"
+            android:launchMode="singleTop"
+            android:noHistory="true"
+            android:theme="@style/AppCompatTheme"
+            android:screenOrientation="portrait">
+        </activity>
+
+
+        <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
