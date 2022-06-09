@@ -1,6 +1,7 @@
 package de.num42.sharing.ui.main
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Shader
@@ -19,6 +20,7 @@ import de.num42.sharing.apolloInstance
 import de.num42.sharing.databinding.ActivityMainBinding
 import de.num42.sharing.graphql.MeQuery
 import de.num42.sharing.ui.login.LoginActivity
+import de.num42.sharing.ui.profile.ProfileActivity
 import de.num42.sharing.ui.register.RegisterActivity
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -29,10 +31,19 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var client : ApolloClient
+    private lateinit var sharedPreferences: SharedPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        sharedPreferences = getSharedPreferences("SharingSharedPref", MODE_PRIVATE)
+
+        if(sharedPreferences.contains("authentication")){
+            val authenticationString = sharedPreferences.getString("authentication","")?:""
+            client=apolloInstance.setAuthorization(authenticationString)
+            startActivity(Intent(this,ProfileActivity::class.java))
+        }
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

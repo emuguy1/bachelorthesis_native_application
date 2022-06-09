@@ -1,0 +1,24 @@
+query GetItems($id: ID!, $cursor: String) {
+    node (id: $id) {
+        id
+        ...on Person{
+            id
+            items(first: 10, after: $cursor){
+                edges{
+                    node {
+                        id
+                        ... on Item{
+                            id
+                            name
+                            description
+                        }
+                    }
+                }
+                pageInfo {
+                    hasNextPage
+                    endCursor
+                }
+            }
+        }
+    }
+}

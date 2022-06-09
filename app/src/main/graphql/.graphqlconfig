@@ -10,8 +10,8 @@
         },
         "introspect": true
       },
-      "Authenticated GraphQL Endpoint": {
-        "url": "http://192.168.188.69:4000/graphql/graphiql?authorization=f6310f39449c363ce7160e629f4b0065aaa5bb44c0b9ef71642078fd0408ac90&",
+      "Authenticated Test GraphQL Endpoint": {
+        "url": "http://192.168.188.69:4000/graphql/graphiql?authorization=U0ZNeU5UWS5nMmdEYlFBQUFDRE1qcXVCV20tNndJNE1zLVFUTEhhMFVpZkpGejBiazVBaUVaRzNTNXVzNVc0R0FJbG0tMGVCQVdJQUFWR0EudUc0cldTT2U5aEQyT1BfMkxVN1ZfMlNKSmw1V3B0NmRLaVBOSWpvV3d6MA==",
         "headers": {
           "user-agent": "JS GraphQL"
         },
