@@ -15,9 +15,7 @@ import de.num42.sharing.databinding.ActivityProfileBinding
 import de.num42.sharing.graphql.GetItemsQuery
 import de.num42.sharing.graphql.MeQuery
 import de.num42.sharing.ui.main.MainActivity
-import de.num42.sharing.ui.message.MessageActivity
-import de.num42.sharing.ui.register.RegisterActivity
-import java.util.*
+import de.num42.sharing.ui.messages.MessagesActivity
 
 class ProfileActivity: AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
@@ -49,12 +47,14 @@ class ProfileActivity: AppCompatActivity() {
         }
 
         binding.toolbarLoggedIn.toolbarMessagesButton.setOnClickListener{
-            val intent = Intent(this, MessageActivity::class.java)
+            val intent = Intent(this, MessagesActivity::class.java)
             startActivity(intent)
         }
 
         binding.toolbarLoggedIn.toolbarLogoutButton.setOnClickListener{
             //Logout
+            sharedPreferences.edit().remove("authentication").apply()
+            sharedPreferences.edit().remove("meId").apply()
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
@@ -63,6 +63,10 @@ class ProfileActivity: AppCompatActivity() {
         getPersonData()
 
     }
+    private fun returnToMainPage(){
+        startActivity(Intent(this,MainActivity::class.java))
+    }
+
     private fun getPersonData(){
         lifecycleScope.launchWhenResumed {
             val response = try {
@@ -74,13 +78,17 @@ class ProfileActivity: AppCompatActivity() {
             val me = response.data?.me
             if(me == null || response.hasErrors()){
                 println(response.errors?.get(0)?.message)
+                if(response.errors?.get(0)?.message == "Nuter nicht gefunden."){
+                    sharedPreferences.edit().remove("authorization")
+                    client = apolloInstance.resetAuthorization()
+                    returnToMainPage()
+                }
                 return@launchWhenResumed
             } else {
                 binding.firstNameText.text = me.firstName
                 binding.lastNameText.text = me.lastName
                 getItems(me.id, null)
                 sharedPreferences.edit().putString("meId",me.id).apply()
-                println("Test--------"+me)
             }
         }
     }
@@ -115,7 +123,6 @@ class ProfileActivity: AppCompatActivity() {
                     }
                 }
                 adapter.submitList(itemList)
-                println("Test--------"+items)
             }
         }
     }
