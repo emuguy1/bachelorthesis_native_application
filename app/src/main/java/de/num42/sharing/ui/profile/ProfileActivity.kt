@@ -3,6 +3,7 @@ package de.num42.sharing.ui.profile
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -82,6 +83,7 @@ class ProfileActivity: AppCompatActivity() {
                     sharedPreferences.edit().remove("authorization")
                     client = apolloInstance.resetAuthorization()
                     returnToMainPage()
+                    Toast.makeText(applicationContext,"Session expired. Pleas log in again to access your data.",Toast.LENGTH_LONG).show()
                 }
                 return@launchWhenResumed
             } else {
