@@ -1,0 +1,28 @@
+query GetConversations($id: ID!, $cursor: String) {
+    node (id: $id) {
+        id
+        ...on Person{
+            firstName
+            lastName
+            conversations(first: 10, after: $cursor){
+                edges{
+                    node {
+                        ... on Conversation{
+                            id
+                            lastMessage
+                            lastMessageAt
+                            participants {
+                                firstName
+                                lastName
+                            }
+                        }
+                    }
+                }
+                pageInfo {
+                    hasNextPage
+                    endCursor
+                }
+            }
+        }
+    }
+}
