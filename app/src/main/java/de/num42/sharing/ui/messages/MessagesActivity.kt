@@ -45,7 +45,7 @@ class MessagesActivity: AppCompatActivity() {
         client = apolloInstance.get()
         sharedPreferences = getSharedPreferences("SharingSharedPref", MODE_PRIVATE)
 
-        adapter = MessagesAdapter()
+        adapter = MessagesAdapter(this)
         binding.converstionsList.adapter = adapter
         binding.converstionsList.layoutManager = LinearLayoutManager(this)
 

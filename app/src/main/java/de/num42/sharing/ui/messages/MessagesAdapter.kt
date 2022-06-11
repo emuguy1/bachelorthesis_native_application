@@ -1,19 +1,24 @@
 package de.num42.sharing.ui.messages
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import de.num42.sharing.R
 import de.num42.sharing.data.Conversation
 import de.num42.sharing.databinding.ViewConversationBinding
+import de.num42.sharing.ui.message.MessageActivity
+import kotlin.coroutines.coroutineContext
 
 
+class MessagesAdapter(context: Context) : ListAdapter<Conversation, MessagesAdapter.ConversationViewHolder>(ConversationComparator()) {
 
+    val con = context
 
-
-class MessagesAdapter : ListAdapter<Conversation, MessagesAdapter.ConversationViewHolder>(ConversationComparator()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversationViewHolder {
         val binding = ViewConversationBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -44,19 +49,27 @@ class MessagesAdapter : ListAdapter<Conversation, MessagesAdapter.ConversationVi
             itemBinding.conversationTime.text = item.lastMessageAt
             itemBinding.conversationText.text = item.lastMessage
 
+            itemBinding.conversationCard.setOnClickListener{
+                val intent = Intent(con, MessageActivity::class.java).putExtra(
+                    MessageActivity.SELECTED_CONVERSATION,
+                    item.conversationId
+                )
+                con.startActivity(intent)
+            }
+
         }
 
         override fun onClick(p0: View?) {
-//            if (p0 != null) {
-//                if (p0.id == R.id.item_card) {
-//                    val context = p0.context
-//                    val intent = Intent(context, PlantDetailActivity::class.java).putExtra(
-//                        PlantActivity.SELECTED_PLANT,
-//                        currentList[layoutPosition].id
-//                    )
-//                    context.startActivity(intent)
-//                }
-//            }
+            if (p0 != null) {
+                if (p0.id == R.id.conversation_card) {
+                    val context = p0.context
+                    val intent = Intent(context, MessageActivity::class.java).putExtra(
+                        MessageActivity.SELECTED_CONVERSATION,
+                        currentList[layoutPosition].conversationId
+                    )
+                    context.startActivity(intent)
+                }
+            }
         }
     }
 

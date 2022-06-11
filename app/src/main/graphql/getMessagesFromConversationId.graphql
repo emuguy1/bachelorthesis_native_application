@@ -1,0 +1,35 @@
+query GetMessages($id: ID!, $cursor: String) {
+    node (id: $id) {
+        id
+        ...on Conversation{
+            participants {
+                firstName
+                lastName
+                id
+            }
+            messages(first: 10, after: $cursor){
+                edges {
+                    node{
+                        id
+                        ...on Message{
+                            message
+                            timestamp
+                            readAt
+                            recipient {
+                                id
+
+                            }
+                            sender {
+                                id
+                            }
+                        }
+                    }
+                }
+                pageInfo {
+                    hasNextPage
+                    endCursor
+                }
+            }
+        }
+    }
+}
