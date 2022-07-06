@@ -163,7 +163,6 @@ class MessageActivity: AppCompatActivity() {
 
                 adapter.submitList(itemList)
                 adapter.notifyDataSetChanged()
-                //TODO: Fix when last and reverted Thing is fixed.
                 if(messages.pageInfo.hasNextPage){
                     getConversations(convId,messages.pageInfo.endCursor)
                 }

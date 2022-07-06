@@ -3,14 +3,18 @@ package de.num42.sharing.ui.profile
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.Optional
 import com.apollographql.apollo3.exception.ApolloException
+import de.num42.sharing.SharingApplication
 import de.num42.sharing.apolloInstance
+import de.num42.sharing.database.entities.Item as DBItem
 import de.num42.sharing.data.Item
 import de.num42.sharing.databinding.ActivityProfileBinding
 import de.num42.sharing.graphql.GetItemsQuery
@@ -24,12 +28,17 @@ class ProfileActivity: AppCompatActivity() {
     private var itemList = mutableListOf<Item>()
     private lateinit var adapter: ItemsAdapter
     private lateinit var sharedPreferences: SharedPreferences
+    private val itemViewModel: ItemViewModel by viewModels {
+        ItemViewModelFactory((application as SharingApplication).repository)
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityProfileBinding.inflate(layoutInflater)
+
+
         setContentView(binding.root)
 
         client = apolloInstance.get()
@@ -58,6 +67,23 @@ class ProfileActivity: AppCompatActivity() {
             sharedPreferences.edit().remove("meId").apply()
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+        }
+
+        itemViewModel.allItems.observe(this) { items ->
+            // Update the cached copy of the words in the adapter.
+            items.let {
+                val list=mutableListOf<Item>()
+                for(item in items){
+                    val transceivedItem = Item()
+                    transceivedItem.apply {
+                        itemId= item.itemId
+                        description = item.description
+                        name = item.name
+                    }
+                    list.add(transceivedItem)
+                }
+                adapter.submitList(list)
+            }
         }
 
 
@@ -108,10 +134,6 @@ class ProfileActivity: AppCompatActivity() {
                 return@launchWhenResumed
             } else {
                 //save the items in a list
-
-                if(items.pageInfo.hasNextPage){
-                    getItems(id,items.pageInfo.endCursor)
-                }
                 if(items.edges != null){
                     items.edges.forEach { edge->
                         if (edge?.node != null) {
@@ -120,11 +142,15 @@ class ProfileActivity: AppCompatActivity() {
                                 description = edge.node.onItem.description.toString()
                                 itemId = edge.node.onItem.id
                             }
+                            itemViewModel.insertItem(DBItem(newItem.name,newItem.description,newItem.itemId))
                             itemList.add(newItem)
                         }
                     }
                 }
-                adapter.submitList(itemList)
+                //adapter.submitList(itemList)
+                if(items.pageInfo.hasNextPage){
+                    getItems(id,items.pageInfo.endCursor)
+                }
             }
         }
     }
